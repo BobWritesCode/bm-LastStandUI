@@ -23,7 +23,6 @@ server_script {
 ui_page 'html/index.html'
 
 files {
-  'html/jquery-3.7.1.min.js',
 	'html/index.html',
 	'html/script.js',
   'html/style.css'
