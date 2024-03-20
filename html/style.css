@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Fugaz+One&family=Strait&display=swap');
+
+.test-font {
+  font-family: 'Bungee', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.fugaz-one-regular {
+  font-family: 'Fugaz One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.strait-regular {
+  font-family: 'Strait', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 3vh;
+  text-shadow: 0px 0px 20px #ff1717, 0px 0px 20px #000000, 0px 0px 20px #000000;
+  color: #ff9292;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(255, 255, 255, 0.1);
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 0, 16, 0) 23%,
+    rgba(69, 1, 1, 0.5) 76%,
+    rgba(22, 0, 2, 1) 100%
+  );
+}
+
+#footer {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1%;
+  background-image: linear-gradient(
+    180deg,
+    rgba(50, 50, 50, 0) 0%,
+    rgba(36, 36, 36, 0.9) 80%,
+    rgba(36, 36, 36, 1) 100%
+  );
+}
+
+#time-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#text-info {
+  text-align: center;
+  margin-bottom: 1%;
+  color: white;
+}
+
+.time-card {
+  background-color: rgb(16, 16, 16);
+  color: white;
+  font-size: 40px;
+  padding: 5px;
+  border-radius: 10%;
+  margin-right: 5px;
+  font-family: 'Fugaz One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-image: linear-gradient(360deg, rgba(195, 20, 32, 0) 0%, rgba(109, 109, 109, 0.3) 100%);
+}
+
+.time-colon {
+  color: white;
+  font-size: 40px;
+  padding: 5px;
+  border-radius: 10%;
+  margin-right: 5px;
+  font-family: 'Fugaz One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
