@@ -1,4 +1,7 @@
 let isDebug = true;
+let timer;
+let fadeInTimer;
+let fadeOutTimer;
 
 document.onreadystatechange = () => {
   if (document.readyState === 'complete') {
