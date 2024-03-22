@@ -11,4 +11,11 @@ function OpenUI()
   })
 end
 
+function CloseUI()
+  SendNUIMessage({
+    action = 'CloseUI',
+  })
+end
+
+
 print("^4[Log] ^3bm-LastStandUI ^2started^7")
