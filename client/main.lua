@@ -1,5 +1,6 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
+local isUIOpen = false
 AddEventHandler('onResourceStart', function(resourceName)
   if GetCurrentResourceName() ~= resourceName then return end
 end)
