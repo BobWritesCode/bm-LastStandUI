@@ -17,5 +17,21 @@ function CloseUI()
   })
 end
 
+CreateThread(function()
+  while true do
+    Wait(100)
+    local ped = PlayerPedId()
+    local health = GetEntityHealth(ped)
+    local Player = QBCore.Functions.GetPlayerData()
+    if (Player.metadata['inlaststand'] or Player.metadata['isdead'] or health == 0) and not isUIOpen then
+      OpenUI()
+      isUIOpen = true
+    end
+    if (not Player.metadata['inlaststand'] and not Player.metadata['isdead']) and isUIOpen then
+      CloseUI()
+      isUIOpen = false
+    end
+  end
+end)
 
 print("^4[Log] ^3bm-LastStandUI ^2started^7")
