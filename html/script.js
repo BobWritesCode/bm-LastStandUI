@@ -4,10 +4,12 @@ document.onreadystatechange = () => {
   if (document.readyState === 'complete') {
     window.addEventListener('message', function (e) {
       switch (e.data.action) {
-        case 'open':
+        case 'OpenUI':
+          console.log(e.data.timer);
+          OpenUI(e.data.timer);
           break;
-        case 'damage':
-          UpdateDamage(e.data.health);
+        case 'CloseUI':
+          CloseUI();
           break;
         default:
           break;
@@ -16,8 +18,18 @@ document.onreadystatechange = () => {
   }
 };
 
-const UpdateDamage = (health) => {
-  DebugLog('UpdateDamage()', health);
+const OpenUI = (reviveTime) => {
+  DebugLog('Function:', 'OpenUI()');
+  CountDown(reviveTime);
+  clearInterval(fadeOutTimer);
+  fadeIn();
+};
+
+const CloseUI = () => {
+  DebugLog('Function:', 'CloseUI()');
+  clearInterval(timer);
+  clearInterval(fadeInTimer);
+  fadeOut();
 };
 
 function fadeIn() {
