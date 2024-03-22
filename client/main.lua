@@ -34,4 +34,7 @@ CreateThread(function()
   end
 end)
 
+exports('OpenUI', OpenUI)
+exports('CloseUI', CloseUI)
+
 print("^4[Log] ^3bm-LastStandUI ^2started^7")
