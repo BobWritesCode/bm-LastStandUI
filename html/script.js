@@ -20,18 +20,36 @@ const UpdateDamage = (health) => {
   DebugLog('UpdateDamage()', health);
 };
 
-const CountDown = (startTime) => {
-  const count = setInterval(function () {
-    if (startTime == 0) {
-      clearInterval(count);
+function fadeIn() {
+  const element = document.body;
+  element.style.opacity = 0.0;
+  let initOpacity = 0.1;
+  element.style.display = 'block';
+  // Update the opacity with 0.1 every 10 milliseconds
+  fadeInTimer = setInterval(function () {
+    if (initOpacity >= 1) {
+      clearInterval(fadeInTimer);
     }
-    const s = String(startTime % 60).padStart(2, '0');
-    const m = Minutes(startTime)
-    document.getElementById("M1").textContent= m[0]
-    document.getElementById("M2").textContent= m[1]
-    document.getElementById("S1").textContent= s[0]
-    document.getElementById("S2").textContent= s[1]
-    startTime--;
+    element.style.opacity = initOpacity;
+    element.style.filter = 'alpha(opacity=' + initOpacity * 100 + ')';
+    initOpacity += initOpacity * 0.03;
+  }, 25);
+}
+
+function fadeOut() {
+  const element = document.body;
+  let initOpacity = element.style.opacity;
+  // Update the opacity with 0.1 every 10 milliseconds
+  fadeOutTimer = setInterval(function () {
+    if (initOpacity <= 0.05) {
+      element.style.display = 'none';
+      clearInterval(fadeOutTimer);
+    }
+    element.style.opacity = initOpacity;
+    element.style.filter = 'alpha(opacity=' + initOpacity * 100 + ')';
+    initOpacity = initOpacity * 0.95;
+  }, 25);
+}
   }, 1000);
 };
 
