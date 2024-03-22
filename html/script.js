@@ -50,18 +50,36 @@ function fadeOut() {
     initOpacity = initOpacity * 0.95;
   }, 25);
 }
+
+const CountDown = (reviveTime) => {
+  DebugLog('Function:', 'CountDown()');
+  SetTime(reviveTime);
+  timer = setInterval(function () {
+    if (reviveTime == 0) {
+      clearInterval(timer);
+    }
+    SetTime(reviveTime);
+    reviveTime--
   }, 1000);
 };
 
-const Minutes = (startTime) => {
-  const x = Math.floor(startTime / 60);
+const Minutes = (reviveTime) => {
+  const x = Math.floor(reviveTime / 60);
   if (x > 99) {
     return String(99).padStart(2, '0');
   }
   return String(x).padStart(2, '0');
 };
 
-CountDown(137);
+function SetTime(reviveTime) {
+  DebugLog('Revive time left: ', reviveTime);
+  const s = String(reviveTime % 60).padStart(2, '0');
+  const m = Minutes(reviveTime);
+  document.getElementById('M1').textContent = m[0];
+  document.getElementById('M2').textContent = m[1];
+  document.getElementById('S1').textContent = s[0];
+  document.getElementById('S2').textContent = s[1];
+}
 
 function DebugLog(str = null, _str2 = null) {
   if (!isDebug) {
