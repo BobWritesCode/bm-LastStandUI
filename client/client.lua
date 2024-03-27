@@ -112,6 +112,7 @@ end
 function PlayerWasRevived(health)
   DebugPrint('--- Player was revived ---')
   isAlive = true
+  SendNUIMessage({ action = 'Display', el = "footer", show = "none" })
   SendNUIMessage({ action = 'Revived', hp = health - 100, maxHp = 200 - 100 })
 end
 
