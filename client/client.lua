@@ -132,7 +132,6 @@ function DeadTimer()
     local isPingOnCoolDown = Config.willAutoPingMedic
     local timeWait = 50                   -- Pick a number that is lower and devisable to 1000
     local parsesRequired = 1000 / timeWait -- How many iterations in loop are required to be ~ 1 second.
-    print(parsesRequired)
     local i = parsesRequired
     local holdCd = 5
     ---
@@ -202,7 +201,7 @@ function DeadTimer()
         end
         ---
       end
-      if i >= parsesRequired then print(i)i = 0 end
+      if i >= parsesRequired then i = 0 end
       i = i + 1
       Wait(timeWait)
     end
