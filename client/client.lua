@@ -149,6 +149,7 @@ function DeadTimer()
             displayMsg = Config.lang.pingCooldown ..
                 " (" .. pingCoooldown .. ")"
           })
+          if not Config.canRespawnOnCooldown then SendNUIMessage({ action = 'UpdateMessage', el = "respawn", displayMsg = Config.lang.giveUponCooldown }) end
         end
       end
       if i == parsesRequired then
