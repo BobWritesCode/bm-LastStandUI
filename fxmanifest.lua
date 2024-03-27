@@ -1,7 +1,8 @@
 fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
-description 'BM-LastStandUI'
+author 'Bob\'s Mods'
+description 'A modern ambient health screen and last stand display'
 version '0.01'
 
 
@@ -11,13 +12,14 @@ shared_scripts {
 }
 
 client_scripts {
-  'client/main.lua',
-  'client/utils.lua'
+  'client/utils.lua',
+  'client/client.lua',
 }
 
 server_script {
-  'server/main.lua',
-  'server/utils.lua'
+  'server/utils.lua',
+  'server/server.lua',
+
 }
 
 ui_page 'html/index.html'

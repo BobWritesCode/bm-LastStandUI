@@ -1,0 +1,20 @@
+{
+  "Lua.diagnostics.globals": [
+    "SendNUIMessage",
+    "exports",
+    "GetCurrentResourceName",
+    "AddEventHandler",
+    "GetEntityHealth",
+    "CreateThread",
+    "Wait",
+    "PlayerPedId",
+    "RegisterNetEvent",
+    "IsControlPressed",
+    "TriggerServerEvent",
+    "TriggerEvent",
+    "IsControlJustPressed"
+  ],
+  "Lua.diagnostics.disable": [
+    "empty-block"
+  ]
+}

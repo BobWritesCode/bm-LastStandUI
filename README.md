@@ -8,6 +8,10 @@ Free free to bookmark, to get the latest updates.
 
 This script provides an updated last stand UI.
 
+## Important to note
+
+- You will require some basic knowledge on how to locate code inside qb-ambulance and to either delete or comment that code out. If you are a server dev this should be simple for you.
+
 ## Dependencies
 
 - QB-Core - Maybe...

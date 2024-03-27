@@ -1,18 +1,52 @@
 let isDebug = true;
-let timer;
+// let timer;
 let fadeInTimer;
 let fadeOutTimer;
+let isUIOpen = true;
+
+window.addEventListener('DOMContentLoaded', function () {
+  fetch('https://bm-AmbientHealthUI/nuiReady', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({}),
+  })
+    .then((r) => {
+      // pass
+    })
+    .catch((e) => {
+      // pass
+    });
+});
 
 document.onreadystatechange = () => {
   if (document.readyState === 'complete') {
     window.addEventListener('message', function (e) {
       switch (e.data.action) {
-        case 'OpenUI':
-          console.log(e.data.timer);
-          OpenUI(e.data.timer);
+        case 'UpdateHp':
+          HitPoint(e.data.hp, e.data.maxHp);
           break;
-        case 'CloseUI':
-          CloseUI();
+        // case 'StartDownTimer':
+        //   StartCountdownTimer();
+        //   break;
+        case 'Died':
+          Reset();
+          // StartCountdownTimer(e.data.timer);
+          break;
+        case 'Revived':
+          // CloseCountdownTimer();
+          HitPoint(e.data.hp, e.data.maxHp);
+          break;
+        case 'UpdateMessage':
+          const el = document.getElementById(e.data.el);
+          el.innerText = e.data.displayMsg;
+          break;
+        case 'HideEl':
+          const el4 = document.getElementById(e.data.el);
+          el4.style.visibility = e.data.show ? 'visible' : 'hidden';
+          break;
+        case 'Display':
+          const el5 = document.getElementById(e.data.el);
+          el5.style.display = e.data.show;
           break;
         default:
           break;
@@ -21,79 +55,78 @@ document.onreadystatechange = () => {
   }
 };
 
-const OpenUI = (reviveTime) => {
-  DebugLog('Function:', 'OpenUI()');
-  CountDown(reviveTime);
+const HitPoint = (_hp, _maxHp) => {
+  const hp = Number(_hp);
+  const maxHp = Number(_maxHp);
+  DebugLog('Function:', 'HitPoint()');
+  DebugLog('hp:', hp);
+  DebugLog('maxHp:', maxHp);
+  DebugLog('Percent:', hp / maxHp);
+  const Percent = hp / maxHp;
+  const bodyOpacity = window.getComputedStyle(document.body).getPropertyValue('opacity');
+  DebugLog('Current opacity:', bodyOpacity);
+  if (Percent < 1 - bodyOpacity) {
+    fadeIn(Math.min(1.0, 1 - Percent));
+  } else {
+    fadeOut(Math.max(0.0, 1 - Percent));
+  }
+};
+
+// const StartCountdownTimer = (reviveTime) => {
+//   clearInterval(timer);
+//   CountDown(reviveTime);
+// };
+
+// const CloseCountdownTimer = () => {
+//   clearInterval(timer);
+//   document.getElementById('footer').style.display = 'none';
+// };
+
+function fadeIn(_fadeTo) {
+  let fadeTo = Number(_fadeTo);
+  DebugLog('fadeIn(fadeTo):', fadeTo);
   clearInterval(fadeOutTimer);
-  fadeIn();
-};
-
-const CloseUI = () => {
-  DebugLog('Function:', 'CloseUI()');
-  clearInterval(timer);
   clearInterval(fadeInTimer);
-  fadeOut();
-};
-
-function fadeIn() {
-  const element = document.body;
-  element.style.opacity = 0.0;
-  let initOpacity = 0.1;
-  element.style.display = 'block';
-  // Update the opacity with 0.1 every 10 milliseconds
+  let initOpacity = Number(window.getComputedStyle(document.body).getPropertyValue('opacity'));
+  initOpacity = initOpacity.toFixed(4);
   fadeInTimer = setInterval(function () {
-    if (initOpacity >= 1) {
+    if (initOpacity >= fadeTo) {
+      DebugLog('Fade in finished at:', initOpacity);
       clearInterval(fadeInTimer);
     }
-    element.style.opacity = initOpacity;
-    element.style.filter = 'alpha(opacity=' + initOpacity * 100 + ')';
-    initOpacity += initOpacity * 0.03;
+    initOpacity = Number(initOpacity) + 0.05;
+    document.body.style.opacity = initOpacity;
   }, 25);
 }
 
-function fadeOut() {
-  const element = document.body;
-  let initOpacity = element.style.opacity;
-  // Update the opacity with 0.1 every 10 milliseconds
+function fadeOut(_fadeTo) {
+  let fadeTo = Number(_fadeTo);
+  DebugLog('fadeOut(fadeTo):', fadeTo);
+  clearInterval(fadeOutTimer);
+  clearInterval(fadeInTimer);
+  let initOpacity = Number(window.getComputedStyle(document.body).getPropertyValue('opacity'));
+  initOpacity = initOpacity.toFixed(4);
   fadeOutTimer = setInterval(function () {
-    if (initOpacity <= 0.05) {
-      element.style.display = 'none';
+    if (initOpacity <= Math.max(0.1, fadeTo)) {
+      document.body.style.opacity = 0.0;
+      DebugLog('Fade out finished at:', initOpacity);
       clearInterval(fadeOutTimer);
+      fadeOutTimer = null;
     }
-    element.style.opacity = initOpacity;
-    element.style.filter = 'alpha(opacity=' + initOpacity * 100 + ')';
-    initOpacity = initOpacity * 0.95;
+    initOpacity = (initOpacity * 0.97).toFixed(4);
+    document.body.style.opacity = initOpacity;
   }, 25);
 }
 
-const CountDown = (reviveTime) => {
-  DebugLog('Function:', 'CountDown()');
-  SetTime(reviveTime);
-  timer = setInterval(function () {
-    if (reviveTime == 0) {
-      clearInterval(timer);
-    }
-    SetTime(reviveTime);
-    reviveTime--
-  }, 1000);
-};
-
-const Minutes = (reviveTime) => {
-  const x = Math.floor(reviveTime / 60);
-  if (x > 99) {
-    return String(99).padStart(2, '0');
-  }
-  return String(x).padStart(2, '0');
-};
-
-function SetTime(reviveTime) {
-  DebugLog('Revive time left: ', reviveTime);
-  const s = String(reviveTime % 60).padStart(2, '0');
-  const m = Minutes(reviveTime);
-  document.getElementById('M1').textContent = m[0];
-  document.getElementById('M2').textContent = m[1];
-  document.getElementById('S1').textContent = s[0];
-  document.getElementById('S2').textContent = s[1];
+function Reset() {
+  const el = document.getElementById('footer');
+  el.style.display = 'flex';
+  const elTimeContainer = document.getElementById('time-container');
+  elTimeContainer.style.display = 'flex';
+  const elCD = document.getElementById('CD');
+  elCD.style.display = 'none';
+  // const elTextRespawn = document.getElementById('respawn');
+  // elTextRespawn.style.visibility = 'hidden';
 }
 
 function DebugLog(str = null, _str2 = null) {
