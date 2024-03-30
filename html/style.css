@@ -69,22 +69,17 @@ h1 {
   justify-content: center;
 }
 
-#ping-medic,
-#respawn,
-#ping-medic-cd {
+#line-2,
+#line-4,
+#line-3,
+#line-1 {
   text-align: center;
   margin-bottom: 1%;
   color: white;
 }
 
-/* #respawn,
-#ping-medic-cd {
-  visibility:hidden;
-} */
-
 #CD {
   display: none;
-  /* visibility:hidden; */
 }
 
 .time-card {

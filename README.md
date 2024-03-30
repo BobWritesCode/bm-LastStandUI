@@ -8,13 +8,19 @@ Free free to bookmark, to get the latest updates.
 
 This script provides an updated last stand UI.
 
+## Features
+
+- Unique on screen ambient damage visual
+- Fully customisable config
+- Death camera
+
 ## Important to note
 
 - You will require some basic knowledge on how to locate code inside qb-ambulancejob and to either delete or comment that code out. If you are a server dev this should be simple for you. The installation instructions may vary based on if you have already edited the code before or using a different version on the code.
 
 ## Dependencies
 
-- QB-Core - Maybe...
+- QB-Core
 
 ## Screenshots
 
@@ -27,48 +33,25 @@ You need to make the following changes in qb-ambulancejob if you are using this 
 
 ### qb-ambulance job changes
 
+#### client.lua
+
 - Go to qb-ambulancejob/client/client.lua
-- Comment out lines 182 to 199.
+- Comment out line 121.
 
 ```lua
--- if not isInHospitalBed then
---     if deathTime > 0 then
---         DrawTxt(0.93, 1.44, 1.0, 1.0, 0.6, Lang:t('info.respawn_txt', { deathtime = math.ceil(deathTime) }), 255, 255, 255, 255)
---     else
---         DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, Lang:t('info.respawn_revive', { holdtime = hold, cost = Config.BillCost }), 255, 255, 255, 255)
---     end
--- end
+DeathTimer()
 ```
 
-- Go to qb-ambulancejob/client/client.lua
-- Comment out lines 182 to 199.
+#### dead.lua
+
+- Go to qb-ambulancejob/client/dead.lua
+- Comment out lines 54.
 
 ```lua
--- elseif InLaststand then
---     sleep = 5
-
---     if LaststandTime > Config.MinimumRevive then
---         DrawTxt(0.94, 1.44, 1.0, 1.0, 0.6, Lang:t('info.bleed_out', { time = math.ceil(LaststandTime) }), 255, 255, 255, 255)
---     else
---         DrawTxt(0.845, 1.44, 1.0, 1.0, 0.6, Lang:t('info.bleed_out_help', { time = math.ceil(LaststandTime) }), 255, 255, 255, 255)
---         if not emsNotified then
---             DrawTxt(0.91, 1.40, 1.0, 1.0, 0.6, Lang:t('info.request_help'), 255, 255, 255, 255)
---         else
---             DrawTxt(0.90, 1.40, 1.0, 1.0, 0.6, Lang:t('info.help_requested'), 255, 255, 255, 255)
---         end
-
---         if IsControlJustPressed(0, 47) and not emsNotified then
---             TriggerServerEvent('hospital:server:ambulanceAlert', Lang:t('info.civ_down'))
---             emsNotified = true
---         end
-    -- end
+TriggerServerEvent('hospital:server:ambulanceAlert', Lang:t('info.civ_died'))
 ```
 
-#### DeathTimer()
-
-You need to comment out references to DeathTimer()
-
-- Go to qb-ambulancejob/client/client.lua
+- Go to qb-ambulancejob/client/dead.lua
 - Comment out lines 59 to 81.
 
 ```lua
@@ -98,24 +81,65 @@ end
 ```
 
 - Go to qb-ambulancejob/client/client.lua
-- Comment out line 121.
+- Comment out lines 154 to 160.
 
 ```lua
--- DeathTimer()
+if not isInHospitalBed then
+    if deathTime > 0 then
+        DrawTxt(0.93, 1.44, 1.0, 1.0, 0.6, Lang:t('info.respawn_txt', { deathtime = math.ceil(deathTime) }), 255, 255, 255, 255)
+    else
+        DrawTxt(0.865, 1.44, 1.0, 1.0, 0.6, Lang:t('info.respawn_revive', { holdtime = hold, cost = Config.BillCost }), 255, 255, 255, 255)
+    end
+end
 ```
+
+- Go to qb-ambulancejob/client/dead.lua
+- Comment out lines 182 to 199.
+
+```lua
+elseif InLaststand then
+    sleep = 5
+
+    if LaststandTime > Config.MinimumRevive then
+        DrawTxt(0.94, 1.44, 1.0, 1.0, 0.6, Lang:t('info.bleed_out', { time = math.ceil(LaststandTime) }), 255, 255, 255, 255)
+    else
+        DrawTxt(0.845, 1.44, 1.0, 1.0, 0.6, Lang:t('info.bleed_out_help', { time = math.ceil(LaststandTime) }), 255, 255, 255, 255)
+        if not emsNotified then
+            DrawTxt(0.91, 1.40, 1.0, 1.0, 0.6, Lang:t('info.request_help'), 255, 255, 255, 255)
+        else
+            DrawTxt(0.90, 1.40, 1.0, 1.0, 0.6, Lang:t('info.help_requested'), 255, 255, 255, 255)
+        end
+
+        if IsControlJustPressed(0, 47) and not emsNotified then
+            TriggerServerEvent('hospital:server:ambulanceAlert', Lang:t('info.civ_down'))
+            emsNotified = true
+        end
+    end
+```
+
+#### job.lua
 
 - Go to qb-ambulancejob/client/job.lua
 - Comment out line 127.
 
 ```lua
--- DeathTimer()
+DeathTimer()
+```
+
+#### laststand.lua
+
+- Go to qb-ambulancejob/client/laststand.lua
+- Comment out line 71.
+
+```lua
+TriggerServerEvent('hospital:server:ambulanceAlert', Lang:t('info.civ_down'))
 ```
 
 - Go to qb-ambulancejob/client/laststand.lua
 - Comment out line 100.
 
 ```lua
--- DeathTimer()
+DeathTimer()
 ```
 
 ## License

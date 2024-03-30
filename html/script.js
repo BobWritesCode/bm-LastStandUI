@@ -1,5 +1,4 @@
-let isDebug = true;
-// let timer;
+let isDebug = false;
 let fadeInTimer;
 let fadeOutTimer;
 let isUIOpen = true;
@@ -23,17 +22,16 @@ document.onreadystatechange = () => {
     window.addEventListener('message', function (e) {
       switch (e.data.action) {
         case 'UpdateHp':
+          DebugLog('UpdateHp', e.data.hp);
           HitPoint(e.data.hp, e.data.maxHp);
           break;
-        // case 'StartDownTimer':
-        //   StartCountdownTimer();
-        //   break;
+        case 'Debug':
+          isDebug = e.data.debug;
+          break;
         case 'Died':
           Reset();
-          // StartCountdownTimer(e.data.timer);
           break;
         case 'Revived':
-          // CloseCountdownTimer();
           HitPoint(e.data.hp, e.data.maxHp);
           break;
         case 'UpdateMessage':
@@ -72,16 +70,6 @@ const HitPoint = (_hp, _maxHp) => {
   }
 };
 
-// const StartCountdownTimer = (reviveTime) => {
-//   clearInterval(timer);
-//   CountDown(reviveTime);
-// };
-
-// const CloseCountdownTimer = () => {
-//   clearInterval(timer);
-//   document.getElementById('footer').style.display = 'none';
-// };
-
 function fadeIn(_fadeTo) {
   let fadeTo = Number(_fadeTo);
   DebugLog('fadeIn(fadeTo):', fadeTo);
@@ -100,6 +88,7 @@ function fadeIn(_fadeTo) {
 }
 
 function fadeOut(_fadeTo) {
+  DebugLog(_fadeTo);
   let fadeTo = Number(_fadeTo);
   DebugLog('fadeOut(fadeTo):', fadeTo);
   clearInterval(fadeOutTimer);
@@ -119,14 +108,10 @@ function fadeOut(_fadeTo) {
 }
 
 function Reset() {
-  const el = document.getElementById('footer');
-  el.style.display = 'flex';
   const elTimeContainer = document.getElementById('time-container');
   elTimeContainer.style.display = 'flex';
   const elCD = document.getElementById('CD');
   elCD.style.display = 'none';
-  // const elTextRespawn = document.getElementById('respawn');
-  // elTextRespawn.style.visibility = 'hidden';
 }
 
 function DebugLog(str = null, _str2 = null) {

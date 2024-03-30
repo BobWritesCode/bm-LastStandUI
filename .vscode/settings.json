@@ -12,9 +12,36 @@
     "IsControlPressed",
     "TriggerServerEvent",
     "TriggerEvent",
-    "IsControlJustPressed"
+    "IsControlJustPressed",
+    "GetEntityCoords",
+    "GetPlayerPed",
+    "vec3",
+    "isMedicAvaliable",
+    "TriggerScreenblurFadeIn",
+    "TriggerScreenblurFadeOut",
+    "GetPlayerFromServerId",
+    "Citizen",
+    "DoScreenFadeOut",
+    "DoScreenFadeIn",
+    "AttachCamToEntity",
+    "SetCamRot",
+    "SetCamFov",
+    "RenderScriptCams",
+    "GetEntityHeading",
+    "CreateCam",
+    "DestroyCam",
+    "GetCamFov",
+    "GetDisabledControlNormal",
+    "GetCamRot",
+    "RegisterNUICallback",
+    "GetCamCoord",
+    "SetCamCoord",
+    "promise"
   ],
   "Lua.diagnostics.disable": [
     "empty-block"
+  ],
+  "cSpell.words": [
+    "ambulancejob",
   ]
 }

@@ -3,7 +3,7 @@ game 'gta5'
 lua54 'yes'
 author 'Bob\'s Mods'
 description 'A modern ambient health screen and last stand display'
-version '0.01'
+version '0.90'
 
 
 shared_scripts {
